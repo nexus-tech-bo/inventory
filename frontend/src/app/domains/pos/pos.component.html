@@ -1,0 +1,26 @@
+<div
+  class="flex flex-col gap-3 bg-gray-50 p-3 sm:gap-4 sm:p-4 lg:h-[calc(100vh-8rem)] lg:min-h-0 lg:flex-row lg:overflow-hidden"
+>
+  <!-- Productos -->
+  <div class="flex flex-1 flex-col gap-3 min-w-0 lg:gap-4 lg:min-h-0 lg:overflow-hidden">
+    <app-products-pos
+      [categories]="categories()"
+      [selectedCategory]="_selectedCategory()"
+      [products]="filteredProducts()"
+      [isLoading]="isLoading()"
+      [hasError]="hasError()"
+      [paginator]="paginatorData()"
+      [currentPage]="params().page"
+      [currentPageSize]="params().pageSize"
+      (searchChange)="onSearch($event)"
+      (categoryChange)="onCategoryChange($event)"
+      (pageChange)="onPageChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)"
+    />
+  </div>
+
+  <!-- Carrito -->
+  <div class="flex h-[24rem] flex-shrink-0 flex-col min-h-0 sm:h-[26rem] lg:h-full lg:w-96">
+    <app-cart-pos />
+  </div>
+</div>

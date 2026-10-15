@@ -1,0 +1,92 @@
+<div
+  class="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4"
+>
+  <div
+    class="w-full max-w-md rounded-2xl border border-white/10 bg-slate-900/70 p-6 shadow-2xl backdrop-blur-md sm:p-8"
+  >
+    <div class="mb-6 text-center">
+      <div
+        class="mx-auto mb-3 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-secondary text-white"
+      >
+        <svg class="h-8 w-8" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+        </svg>
+      </div>
+      <h1 class="text-2xl font-semibold text-white">Iniciar sesión</h1>
+      <p class="mt-1 text-sm text-slate-300">Accede al sistema de inventario</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      @if (errorMessage()) {
+        <div class="rounded-lg border border-danger/40 bg-danger/10 px-3 py-2 text-sm text-red-100">
+          {{ errorMessage() }}
+        </div>
+      }
+
+      <div>
+        <label for="userName" class="mb-1 block text-sm font-medium text-slate-200">Usuario</label>
+        <input
+          id="userName"
+          type="text"
+          formControlName="userName"
+          autocomplete="username"
+          class="w-full rounded-xl border bg-white/5 px-3 py-2.5 text-sm text-white placeholder:text-slate-400 transition-colors focus:outline-none focus:ring-2"
+          [ngClass]="
+            userNameErrorMessage()
+              ? 'border-danger/70 focus:ring-danger/20'
+              : 'border-white/15 focus:border-primary/60 focus:ring-primary/20'
+          "
+          placeholder="Ingresa tu usuario"
+        />
+        @if (userNameErrorMessage()) {
+          <p class="mt-1 text-xs text-red-200">{{ userNameErrorMessage() }}</p>
+        }
+      </div>
+
+      <div>
+        <label for="password" class="mb-1 block text-sm font-medium text-slate-200"
+          >Contraseña</label
+        >
+        <div class="relative">
+          <input
+            id="password"
+            [type]="passwordInputType()"
+            formControlName="password"
+            autocomplete="current-password"
+            class="w-full rounded-xl border bg-white/5 px-3 py-2.5 pr-11 text-sm text-white placeholder:text-slate-400 transition-colors focus:outline-none focus:ring-2"
+            [ngClass]="
+              passwordErrorMessage()
+                ? 'border-danger/70 focus:ring-danger/20'
+                : 'border-white/15 focus:border-primary/60 focus:ring-primary/20'
+            "
+            placeholder="Ingresa tu contraseña"
+          />
+
+          <button
+            type="button"
+            (click)="togglePasswordVisibility()"
+            class="absolute inset-y-0 right-0 px-3 text-xs font-medium text-slate-300 transition-colors hover:text-white"
+            [attr.aria-label]="isPasswordVisible() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+          >
+            {{ isPasswordVisible() ? 'Ocultar' : 'Mostrar' }}
+          </button>
+        </div>
+        @if (passwordErrorMessage()) {
+          <p class="mt-1 text-xs text-red-200">{{ passwordErrorMessage() }}</p>
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="mt-2 inline-flex w-full items-center justify-center rounded-xl bg-gradient-to-r from-primary to-secondary px-4 py-2.5 text-sm font-semibold text-white transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {{ isLoading() ? 'Iniciando sesión...' : 'Entrar' }}
+      </button>
+    </form>
+
+    <p class="mt-4 text-center text-xs text-slate-300">
+      Demo: <span class="font-semibold text-white">admin</span> /
+      <span class="font-semibold text-white">admin</span>
+    </p>
+  </div>
+</div>

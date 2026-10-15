@@ -1,0 +1,224 @@
+<aside
+  class="fixed left-0 top-16 z-40 flex h-[calc(100vh-4rem)] flex-col border-r border-slate-200 bg-white/95 text-slate-800 shadow-[8px_0_20px_rgba(15,23,42,0.08)] backdrop-blur-sm transition-all duration-300 dark:border-slate-700 dark:bg-slate-900/95 dark:text-slate-100 dark:shadow-[8px_0_20px_rgba(2,6,23,0.45)]"
+  [class.w-64]="!isCollapsed"
+  [class.w-20]="isCollapsed"
+  [class.-translate-x-full]="!isOpen()"
+  [class.translate-x-0]="isOpen()"
+>
+  <button
+    (click)="toggleCollapse()"
+    class="absolute -right-3 top-5 hidden h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md transition-all hover:border-primary/40 hover:text-primary dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:text-primary-300 lg:flex"
+  >
+    <svg
+      class="w-4 h-4 transition-transform duration-300"
+      [class.rotate-180]="isCollapsed"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+
+  <nav class="flex-1 space-y-2 overflow-y-hidden p-3">
+    @for (group of visibleMenuGroups(); track group.id) {
+      <section
+        class="rounded-xl border border-slate-200 bg-slate-50/80 dark:border-slate-700 dark:bg-slate-800/70"
+      >
+        @if (group.collapsible === false) {
+          <div class="px-2 py-2 space-y-1">
+            @for (item of group.items; track item.path) {
+              <a
+                [routerLink]="item.path"
+                [attr.title]="isCollapsed ? item.label : null"
+                routerLinkActive="border-l-4 border-primary bg-gradient-to-r from-primary/15 to-primary/5 text-primary-700 font-medium dark:from-primary/30 dark:to-transparent dark:text-primary-300"
+                class="group flex items-center gap-3 rounded-lg border-l-4 border-transparent px-3 py-2.5 text-slate-600 transition-all hover:bg-white hover:text-primary dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-primary-300"
+              >
+                <span
+                  class="rounded-lg bg-slate-100 p-1.5 transition-colors group-hover:bg-primary/10 dark:bg-slate-700 dark:group-hover:bg-primary/20"
+                >
+                  <svg
+                    class="w-5 h-5 flex-shrink-0 text-slate-500 transition-colors group-hover:text-primary dark:text-slate-300 dark:group-hover:text-primary-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      [attr.d]="item.icon"
+                    />
+                  </svg>
+                </span>
+                @if (!isCollapsed) {
+                  <span class="text-sm">{{ item.label }}</span>
+                }
+              </a>
+            }
+          </div>
+        } @else {
+          <button
+            type="button"
+            (click)="toggleGroup(group.id)"
+            [attr.title]="isCollapsed ? group.label : null"
+            [disabled]="isCollapsed"
+            [class.cursor-default]="isCollapsed"
+            [class.text-primary-700]="isGroupActive(group)"
+            class="w-full flex items-center justify-between gap-2 px-3 py-2 text-left text-xs font-semibold uppercase tracking-[0.12em] text-slate-500 transition-colors hover:text-primary dark:text-slate-300 dark:hover:text-primary-300"
+          >
+            <span class="flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.5"
+                  [attr.d]="group.icon"
+                />
+              </svg>
+              @if (!isCollapsed) {
+                <span>{{ group.label }}</span>
+              }
+            </span>
+
+            @if (!isCollapsed) {
+              <svg
+                class="w-4 h-4 transition-transform duration-200"
+                [class.rotate-180]="isGroupExpanded(group.id)"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            }
+          </button>
+
+          @if (!isCollapsed && isGroupExpanded(group.id)) {
+            <div class="px-2 pb-2 space-y-1">
+              @for (item of group.items; track item.path) {
+                <a
+                  [routerLink]="item.path"
+                  [attr.title]="isCollapsed ? item.label : null"
+                  routerLinkActive="border-l-4 border-primary bg-gradient-to-r from-primary/15 to-primary/5 text-primary-700 font-medium dark:from-primary/30 dark:to-transparent dark:text-primary-300"
+                  class="group flex items-center gap-3 rounded-lg border-l-4 border-transparent px-3 py-2.5 text-slate-600 transition-all hover:bg-white hover:text-primary dark:text-slate-300 dark:hover:bg-slate-700 dark:hover:text-primary-300"
+                >
+                  <span
+                    class="rounded-lg bg-slate-100 p-1.5 transition-colors group-hover:bg-primary/10 dark:bg-slate-700 dark:group-hover:bg-primary/20"
+                  >
+                    <svg
+                      class="w-5 h-5 flex-shrink-0 text-slate-500 transition-colors group-hover:text-primary dark:text-slate-300 dark:group-hover:text-primary-300"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        [attr.d]="item.icon"
+                      />
+                    </svg>
+                  </span>
+                  @if (!isCollapsed) {
+                    <span class="text-sm">{{ item.label }}</span>
+                  }
+                </a>
+              }
+            </div>
+          }
+        }
+      </section>
+    }
+  </nav>
+
+  <div class="space-y-1 border-t border-slate-200 p-3 dark:border-slate-700">
+    @if (selectedBranch) {
+      <button
+        (click)="openBranchModal()"
+        class="group flex w-full items-center gap-3 rounded-lg px-4 py-2.5 text-slate-600 transition-all hover:bg-slate-100 hover:text-primary dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-primary-300"
+      >
+        <span
+          class="rounded-lg bg-slate-100 p-1.5 transition-colors group-hover:bg-primary/10 dark:bg-slate-700 dark:group-hover:bg-primary/20"
+        >
+          <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+            />
+          </svg>
+        </span>
+        @if (!isCollapsed) {
+          <div class="text-left">
+            <span class="text-xs text-slate-400 block dark:text-slate-500">Sucursal</span>
+            <span class="text-sm">{{ selectedBranch.name }}</span>
+          </div>
+        }
+      </button>
+    } @else {
+      <button
+        (click)="openBranchModal()"
+        class="group flex w-full items-center gap-3 rounded-lg px-4 py-2.5 text-slate-600 transition-all hover:bg-slate-100 hover:text-primary dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-primary-300"
+      >
+        <span
+          class="rounded-lg bg-slate-100 p-1.5 transition-colors group-hover:bg-primary/10 dark:bg-slate-700 dark:group-hover:bg-primary/20"
+        >
+          <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.5"
+              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+            />
+          </svg>
+        </span>
+        @if (!isCollapsed) {
+          <span class="text-sm">Seleccionar Sucursal</span>
+        }
+      </button>
+    }
+
+    <button
+      (click)="logout()"
+      class="group flex w-full items-center gap-3 rounded-lg px-4 py-2.5 text-slate-600 transition-all hover:bg-danger/10 hover:text-danger dark:text-slate-300"
+    >
+      <span
+        class="rounded-lg bg-slate-100 p-1.5 transition-colors group-hover:bg-danger/10 dark:bg-slate-700"
+      >
+        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.5"
+            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+          />
+        </svg>
+      </span>
+      @if (!isCollapsed) {
+        <span class="text-sm">Cerrar Sesión</span>
+      }
+    </button>
+  </div>
+</aside>
+
+@if (showBranchModal) {
+  <app-branch-modal (branchSelected)="onBranchSelected($event)" />
+}
+
+@if (isOpen()) {
+  <div
+    (click)="closeSidebar()"
+    (keydown.escape)="closeSidebar()"
+    role="button"
+    tabindex="0"
+    class="lg:hidden fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-30 top-16"
+    aria-label="Cerrar menú"
+  ></div>
+}

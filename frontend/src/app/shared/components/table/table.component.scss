@@ -1,0 +1,114 @@
+.app-table-container {
+  @apply w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm;
+}
+
+.app-table-wrapper {
+  @apply w-full overflow-x-auto;
+}
+
+.app-table {
+  @apply w-full border-collapse;
+}
+
+.app-table-header {
+  @apply bg-slate-100;
+}
+
+.app-table-header-row {
+  @apply border-b border-slate-200 bg-slate-100;
+}
+
+.app-table-header-cell {
+  @apply px-4 py-2 text-left text-sm font-bold text-slate-700;
+}
+
+.app-table-body {
+  @apply bg-white;
+}
+
+.app-table-row {
+  @apply border-b border-slate-100 transition-colors duration-150;
+}
+
+.app-table-row-hover:hover {
+  @apply cursor-pointer bg-primary-50;
+}
+
+.app-table-row-striped {
+  @apply bg-slate-50;
+}
+
+.app-table-cell {
+  @apply px-4 py-2 text-sm leading-5 text-slate-700;
+}
+
+.app-table-empty {
+  @apply flex flex-col items-center justify-center px-4 py-10;
+}
+
+.app-table-empty-icon {
+  @apply mb-3 h-14 w-14 text-slate-300;
+}
+
+.app-table-empty-text {
+  @apply text-sm font-medium text-slate-500;
+}
+
+.skeleton-loader {
+  @apply h-4 animate-pulse rounded bg-slate-200;
+}
+
+.app-table-actions {
+  @apply flex items-center justify-end gap-2;
+}
+
+.app-table-action-btn {
+  @apply inline-flex h-8 w-8 items-center justify-center rounded-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+.app-table-action-btn--view {
+  @apply text-primary-700 hover:bg-primary-50 focus:ring-primary-500;
+}
+
+.app-table-action-btn--edit {
+  @apply text-secondary-700 hover:bg-secondary-100 focus:ring-secondary-500;
+}
+
+.app-table-action-btn--delete {
+  @apply text-danger hover:bg-danger/10 focus:ring-danger;
+}
+
+.app-table-action-btn--primary {
+  @apply bg-primary text-white hover:bg-primary-700 focus:ring-primary;
+}
+
+.app-table-action-btn--secondary {
+  @apply bg-secondary-100 text-secondary-800 hover:bg-secondary-200 focus:ring-secondary-300;
+}
+
+.app-table-action-btn--outline {
+  @apply border border-primary text-primary hover:bg-primary hover:text-white focus:ring-primary;
+}
+
+.app-table-action-btn--danger {
+  @apply bg-danger text-white hover:bg-red-700 focus:ring-danger;
+}
+
+.app-table-action-icon {
+  @apply h-4 w-4;
+}
+
+@media (max-width: 640px) {
+  .app-table-header-cell,
+  .app-table-cell {
+    @apply px-3 py-1.5 text-xs;
+  }
+
+  .app-table-empty-icon {
+    @apply w-12 h-12;
+  }
+
+  .app-table-empty-text {
+    @apply text-sm;
+  }
+}

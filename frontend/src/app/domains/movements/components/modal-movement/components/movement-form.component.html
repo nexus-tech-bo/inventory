@@ -1,0 +1,102 @@
+<app-modal [title]="modalTitle" width="w-128">
+  <form [formGroup]="movementForm" class="space-y-4">
+    <div class="grid grid-cols-2 gap-4">
+      <app-form-dropdown
+        class="col-span-2"
+        name="productId"
+        label="Producto"
+        [parentForm]="movementForm"
+        controlName="productId"
+        placeholder="Selecciona un producto"
+        optionValueKey="id"
+        optionLabelKey="name"
+        [options]="productOptions()"
+      />
+
+      <app-form-dropdown
+        name="movementType"
+        label="Tipo de movimiento"
+        [parentForm]="movementForm"
+        controlName="type"
+        placeholder="Selecciona un tipo de movimiento"
+        optionValueKey="value"
+        optionLabelKey="label"
+        [options]="typeOptions"
+      />
+
+      <app-form-input
+        label="Cantidad"
+        [name]="'quantity'"
+        [type]="'number'"
+        [parentForm]="movementForm"
+        controlName="quantity"
+        placeholder="Cantidad"
+      />
+
+      @if (showOriginFields()) {
+        <app-form-dropdown
+          name="fromBranchId"
+          label="Sucursal origen"
+          [parentForm]="movementForm"
+          controlName="fromBranchId"
+          placeholder="Selecciona una sucursal"
+          optionValueKey="id"
+          optionLabelKey="name"
+          [options]="branchOptions()"
+        />
+
+        <app-form-dropdown
+          name="fromWarehouseId"
+          label="Bodega origen"
+          [parentForm]="movementForm"
+          controlName="fromWarehouseId"
+          placeholder="Selecciona una bodega"
+          optionValueKey="id"
+          optionLabelKey="name"
+          [options]="warehouseOptions()"
+        />
+      }
+
+      @if (showDestinationFields()) {
+        <app-form-dropdown
+          name="toBranchId"
+          label="Sucursal destino"
+          [parentForm]="movementForm"
+          controlName="toBranchId"
+          placeholder="Selecciona una sucursal"
+          optionValueKey="id"
+          optionLabelKey="name"
+          [options]="branchOptions()"
+        />
+
+        <app-form-dropdown
+          name="toWarehouseId"
+          label="Bodega destino"
+          [parentForm]="movementForm"
+          controlName="toWarehouseId"
+          placeholder="Selecciona una bodega"
+          optionValueKey="id"
+          optionLabelKey="name"
+          [options]="warehouseOptions()"
+        />
+      }
+
+      @if (showSalidaNotes()) {
+        <div class="col-span-2">
+          <app-form-input
+            label="Motivo de salida"
+            [name]="'notes'"
+            [parentForm]="movementForm"
+            controlName="notes"
+            placeholder="Describe el motivo de la salida"
+            [textArea]="true"
+          />
+        </div>
+      }
+    </div>
+    <div class="flex justify-end space-x-2">
+      <app-button type="button" label="Guardar y continuar" (buttonClick)="handleSave(true)" />
+      <app-button type="button" label="Guardar" (buttonClick)="handleSave()" />
+    </div>
+  </form>
+</app-modal>

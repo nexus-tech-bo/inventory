@@ -1,0 +1,33 @@
+<div class="mt-2">
+  <label [for]="name()" class="block text-sm font-medium text-teal-600">
+    {{ label() }}
+  </label>
+
+  @if (textArea()) {
+    <textarea
+      [id]="name()"
+      [formControl]="control()"
+      [placeholder]="placeholder()"
+      rows="4"
+      class="mt-2 w-full rounded-md border bg-gray-100 px-4 py-3 transition-colors dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:border-primary-400 dark:focus:ring-primary-400"
+      [class.border-gray-300]="!hasError()"
+      [class.border-red-500]="hasError()"
+      [class.focus:border-blue-500]="!hasError()"
+      [class.focus:ring-blue-500]="!hasError()"
+    ></textarea>
+  } @else {
+    <input
+      [id]="name()"
+      [type]="type()"
+      [formControl]="control()"
+      [placeholder]="placeholder()"
+      class="mt-2 w-full rounded-md border bg-gray-100 px-4 py-3 transition-colors dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:border-primary-400 dark:focus:ring-primary-400"
+      [class.border-gray-300]="!hasError()"
+      [class.border-red-500]="hasError()"
+      [class.focus:border-blue-500]="!hasError()"
+      [class.focus:ring-blue-500]="!hasError()"
+    />
+  }
+
+  <app-form-error [control]="control()" [fieldName]="label()" />
+</div>
